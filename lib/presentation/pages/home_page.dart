@@ -1,3 +1,4 @@
+import 'package:audio_books/utils/extantions/extantions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -7,87 +8,79 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffF1EEE3),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            children: [
-              appBar(context),
-              sayHello(),
-              const SizedBox(
-                height: 30,
-              ),
-              const Categories(),
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text(
-                    "Drama",
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  Text(
-                    "See all",
-                    style: TextStyle(color: Color(0xffE36166)),
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              const Books(),
-              Container(
-                margin: EdgeInsets.all(30),
-                child: BottomNavigationBar(
-                  items: [
-                    BottomNavigationBarItem(
-                      icon: SvgPicture.asset("assets/svg/home.svg"),
-                      label: "Home",
+        backgroundColor: const Color(0xffF1EEE3),
+        body: SafeArea(
+          child: SizedBox(
+            height: Extantions.size(context).height,
+            child: ListView(
+              physics: const BouncingScrollPhysics(),
+              padding: const EdgeInsets.all(16),
+              children: [
+                appBar(context),
+                sayHello(),
+                const SizedBox(
+                  height: 30,
+                ),
+                const Categories(),
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Text(
+                      "Drama",
+                      style: TextStyle(fontSize: 18),
                     ),
-                    BottomNavigationBarItem(
-                      icon: SvgPicture.asset("assets/svg/search.svg"),
-                      label: "Search",
-                    ),
-                    BottomNavigationBarItem(
-                      icon: SvgPicture.asset("assets/svg/bookmark.svg"),
-                      label: "Bookmark",
-                    ),
-                    BottomNavigationBarItem(
-                      icon: SvgPicture.asset("assets/svg/user.svg"),
-                      label: "Profile",
-                    ),
+                    Text(
+                      "See all",
+                      style: TextStyle(color: Color(0xffE36166)),
+                    )
                   ],
                 ),
-              )
-            ],
+                const SizedBox(
+                  height: 20,
+                ),
+                const Books(),
+              ],
+            ),
           ),
         ),
-      ),
-      // bottomNavigationBar: BottomNavigationBar(
-      //   backgroundColor: Color(0xff191815),
-      //   items: [
-      //     BottomNavigationBarItem(
-      //       icon: SvgPicture.asset("assets/svg/home.svg"),
-      //       label: "Home",
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: SvgPicture.asset("assets/svg/search.svg"),
-      //       label: "Search",
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: SvgPicture.asset("assets/svg/bookmark.svg"),
-      //       label: "Bookmark",
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: SvgPicture.asset("assets/svg/user.svg"),
-      //       label: "Profile",
-      //     ),
-      //   ],
-      // ),
-    );
+        bottomNavigationBar: BottomAppBar(
+          color: const Color(0xffF1EEE3),
+          elevation: 0,
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 24),
+            height: 81,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(100),
+              child: BottomNavigationBar(
+                type: BottomNavigationBarType.fixed,
+                backgroundColor: const Color(0xff191815),
+                showSelectedLabels: false,
+                showUnselectedLabels: false,
+                items: [
+                  BottomNavigationBarItem(
+                    icon: SvgPicture.asset("assets/svg/home.svg"),
+                    label: "Home",
+                  ),
+                  BottomNavigationBarItem(
+                    icon: SvgPicture.asset("assets/svg/search.svg"),
+                    label: "Search",
+                  ),
+                  BottomNavigationBarItem(
+                    icon: SvgPicture.asset("assets/svg/bookmark.svg"),
+                    label: "Bookmark",
+                  ),
+                  BottomNavigationBarItem(
+                    icon: SvgPicture.asset("assets/svg/user.svg"),
+                    label: "Profile",
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ));
   }
 
   Padding appBar(BuildContext context) {
@@ -125,11 +118,37 @@ class Books extends StatelessWidget {
         "title": "Authornity",
         "subtitle": "Jeff Vandermer",
         "image": "assets/images/Authority.jpg"
+      },
+      {
+        "id": 3,
+        "title": "Moby Dick",
+        "subtitle": "Herman Meville",
+        "image": "assets/images/REPLACE THIS.jpg"
+      },
+      {
+        "id": 4,
+        "title": "Authornity",
+        "subtitle": "Jeff Vandermer",
+        "image": "assets/images/Authority.jpg"
+      },
+      {
+        "id": 5,
+        "title": "Moby Dick",
+        "subtitle": "Herman Meville",
+        "image": "assets/images/REPLACE THIS.jpg"
+      },
+      {
+        "id": 6,
+        "title": "Authornity",
+        "subtitle": "Jeff Vandermer",
+        "image": "assets/images/Authority.jpg"
       }
     ];
-    return Expanded(
+    return SizedBox(
+      height: 300,
       child: ListView.builder(
         itemCount: books.length,
+        physics: const BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           final item = books[index];
@@ -140,9 +159,20 @@ class Books extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(12),
-                  child: Image.asset(
-                    item["image"],
-                    height: 232,
+                  child: Stack(
+                    children: [
+                      Image.asset(
+                        item["image"],
+                        height: 232,
+                      ),
+                      Opacity(
+                        opacity: 0.25,
+                        child: Image.asset(
+                          "assets/images/Lights.png",
+                          height: 232,
+                        ),
+                      )
+                    ],
                   ),
                 ),
                 const SizedBox(
