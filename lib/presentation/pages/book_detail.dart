@@ -17,35 +17,91 @@ class BookDetail extends StatelessWidget {
                 height: 20,
               ),
               Disk(book: book),
-              Expanded(
-                flex: 1,
-                child: Row(
-                  children: [
-                    Row(
-                      children: [
-                        SvgPicture.asset("assets/svg/star.svg"),
-                        Text("2.5")
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        SvgPicture.asset("assets/svg/lang.svg"),
-                        Text("English")
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        SvgPicture.asset("assets/svg/microphone-2.svg"),
-                        Text("2 hours")
-                      ],
-                    ),
-                  ],
-                ),
-              )
+              const MoreAboutBook(),
+              const SizedBox(
+                height: 20,
+              ),
+              Title(book: book),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class Title extends StatelessWidget {
+  const Title({
+    super.key,
+    required this.book,
+  });
+
+  final Map<String, dynamic> book;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text(
+          book['title'],
+          style: TextStyle(fontSize: 24),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Text(
+          book['subtitle'],
+          style: TextStyle(fontSize: 16),
+        ),
+      ],
+    );
+  }
+}
+
+class MoreAboutBook extends StatelessWidget {
+  const MoreAboutBook({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Row(
+          children: [
+            SvgPicture.asset("assets/svg/star.svg"),
+            const SizedBox(
+              width: 6,
+            ),
+            const Text("4.5")
+          ],
+        ),
+        const SizedBox(
+          width: 18,
+        ),
+        Row(
+          children: [
+            SvgPicture.asset("assets/svg/lang.svg"),
+            const SizedBox(
+              width: 6,
+            ),
+            const Text("English")
+          ],
+        ),
+        const SizedBox(
+          width: 18,
+        ),
+        Row(
+          children: [
+            SvgPicture.asset("assets/svg/microphone-2.svg"),
+            const SizedBox(
+              width: 6,
+            ),
+            const Text("2 hours")
+          ],
+        ),
+      ],
     );
   }
 }
@@ -60,7 +116,8 @@ class Disk extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return SizedBox(
+      height: 370,
       child: Stack(
         children: [
           SvgPicture.asset("assets/svg/disk.svg"),
@@ -107,7 +164,9 @@ class BookDetailAppBar extends StatelessWidget {
               Radius.circular(30),
             ),
           ),
-          onTap: () {},
+          onTap: () {
+            Navigator.pop(context);
+          },
           child: Ink(
             height: 48,
             width: 48,
@@ -121,7 +180,7 @@ class BookDetailAppBar extends StatelessWidget {
                 Center(child: SvgPicture.asset("assets/svg/arrow-right.svg")),
           ),
         ),
-        Text('Detail'),
+        const Text('Detail'),
         InkWell(
           customBorder: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
