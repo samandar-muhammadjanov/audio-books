@@ -2,9 +2,15 @@ import 'package:audio_books/utils/extantions/extantions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,38 +48,90 @@ class HomePage extends StatelessWidget {
                   height: 20,
                 ),
                 const Books(),
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Text(
+                      "Detective",
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    Text(
+                      "See all",
+                      style: TextStyle(color: Color(0xffE36166)),
+                    )
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                const Books()
               ],
             ),
           ),
         ),
         bottomNavigationBar: BottomAppBar(
-          color: const Color(0xffF1EEE3),
+          // color: const Color(0xffF1EEE3),
+          padding: EdgeInsets.zero,
+          color: Colors.transparent,
+
           elevation: 0,
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 24),
             height: 81,
+            decoration: BoxDecoration(),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(100),
               child: BottomNavigationBar(
+                onTap: (value) {
+                  setState(() {
+                    currentIndex = value;
+                  });
+                },
+                currentIndex: currentIndex,
                 type: BottomNavigationBarType.fixed,
                 backgroundColor: const Color(0xff191815),
+                selectedItemColor: const Color(0xffE06065),
+                unselectedItemColor: const Color(0xffF1EEE3),
                 showSelectedLabels: false,
                 showUnselectedLabels: false,
                 items: [
                   BottomNavigationBarItem(
-                    icon: SvgPicture.asset("assets/svg/home.svg"),
+                    icon: SvgPicture.asset(
+                      "assets/svg/home.svg",
+                      color: currentIndex == 0
+                          ? const Color(0xffE06065)
+                          : const Color(0xffF1EEE3),
+                    ),
                     label: "Home",
                   ),
                   BottomNavigationBarItem(
-                    icon: SvgPicture.asset("assets/svg/search.svg"),
+                    icon: SvgPicture.asset(
+                      "assets/svg/search.svg",
+                      color: currentIndex == 1
+                          ? const Color(0xffE06065)
+                          : const Color(0xffF1EEE3),
+                    ),
                     label: "Search",
                   ),
                   BottomNavigationBarItem(
-                    icon: SvgPicture.asset("assets/svg/bookmark.svg"),
+                    icon: SvgPicture.asset(
+                      "assets/svg/bookmark.svg",
+                      color: currentIndex == 2
+                          ? const Color(0xffE06065)
+                          : const Color(0xffF1EEE3),
+                    ),
                     label: "Bookmark",
                   ),
                   BottomNavigationBarItem(
-                    icon: SvgPicture.asset("assets/svg/user.svg"),
+                    icon: SvgPicture.asset(
+                      "assets/svg/user.svg",
+                      color: currentIndex == 3
+                          ? const Color(0xffE06065)
+                          : const Color(0xffF1EEE3),
+                    ),
                     label: "Profile",
                   ),
                 ],
