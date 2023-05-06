@@ -1,3 +1,4 @@
+import 'package:audio_books/presentation/pages/book_detail.dart';
 import 'package:audio_books/utils/extantions/extantions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -212,39 +213,49 @@ class Books extends StatelessWidget {
           final item = books[index];
           return Padding(
             padding: const EdgeInsets.only(right: 18.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: Stack(
-                    children: [
-                      Image.asset(
-                        item["image"],
-                        height: 232,
-                      ),
-                      Opacity(
-                        opacity: 0.25,
-                        child: Image.asset(
-                          "assets/images/Lights.png",
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => BookDetail(book: item),
+                  ),
+                );
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Stack(
+                      children: [
+                        Image.asset(
+                          item["image"],
                           height: 232,
                         ),
-                      )
-                    ],
+                        Opacity(
+                          opacity: 0.25,
+                          child: Image.asset(
+                            "assets/images/Lights.png",
+                            height: 232,
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: 14,
-                ),
-                Text(
-                  item['title'],
-                  style: const TextStyle(fontSize: 16),
-                ),
-                const SizedBox(
-                  height: 4,
-                ),
-                Text(item['subtitle'])
-              ],
+                  const SizedBox(
+                    height: 14,
+                  ),
+                  Text(
+                    item['title'],
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                  const SizedBox(
+                    height: 4,
+                  ),
+                  Text(item['subtitle'])
+                ],
+              ),
             ),
           );
         },
